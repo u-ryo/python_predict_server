@@ -17,3 +17,8 @@ I referred to [【第1回】Pythonではじめるディープラーニング](ht
 1. Edit variables in `prediction_server.py` as you like
 1. `python prediction_server.py`
 1. Access to http://localhost:8180
+
+### Screen Shots
+
+|---|---|
+|![good case](https://raw.githubusercontent.com/wiki/u-ryo/python_prediction_server/images/good.png)|![bad case](https://raw.githubusercontent.com/wiki/u-ryo/python_prediction_server/images/bad.png)|
