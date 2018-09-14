@@ -20,5 +20,6 @@ I referred to [【第1回】Pythonではじめるディープラーニング](ht
 
 ### Screen Shots
 
+|Good Case|Bad Case|
 |---|---|
 |![good case](https://raw.githubusercontent.com/wiki/u-ryo/python_prediction_server/images/good.png)|![bad case](https://raw.githubusercontent.com/wiki/u-ryo/python_prediction_server/images/bad.png)|
