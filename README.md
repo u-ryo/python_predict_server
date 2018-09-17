@@ -3,7 +3,8 @@
 A one file python web server for predicting a keras model.
 
 ### Motivation
-I want a simple system to show others to use the trained model easily even on the NotePC (on ubuntu 18.04).
+I want a simple system to show others to use the trained model easily(=without a framework:django/flask, just BaseHTTPServer) even on the NotePC (on ubuntu 18.04 without a GPU).
+Because in my company managers who don't know programmings are seriously talking about deciding the spec of a PC for using a machine learning. I can't believe but they're going...
 
 ### How to use
 
