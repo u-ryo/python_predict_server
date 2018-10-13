@@ -19,29 +19,42 @@ class BaseHttpServer(BaseHTTPRequestHandler):
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <title>Image Check</title>
   </head>
   <body>
     <h3>Image Check</h3>
     <form>
-      <label>Image File: <input id="file" type="file" accept="image/*"/></label>
+      <label>Image File: <input id="file" type="file" accept="image/*" onChange="change()"/></label>
     </form>
     <p id="prediction"></p>
     <img id="img" src="" width="50%"/>
     <script>
-      $("#file").change(function(){
+      function change() {
         var reader = new FileReader();
-        $("#prediction").html("");
-        console.log(this.files[0].name);
-        var filename = this.files[0].name;
+        document.getElementById("prediction").innerHTML = "";
+        var file = document.getElementById("file");
+        // console.log(file.files[0].name);
+        var filename = file.files[0].name;
         reader.onload = function() {
-          $("#img").attr("src", reader.result);
-          $.ajax({url:"/", type:"POST", data:filename + "," + reader.result})
-          .done((res)=>$("#prediction").html(res))
-          .fail((res)=>console.error(res));
+          document.getElementById("img").setAttribute("src", reader.result);
+          var req = new XMLHttpRequest();
+          req.onreadystatechange = function() {
+            if (req.readyState == 4) {
+              if (req.status == 200) {
+                document.getElementById("prediction").innerHTML = req.responseText;
+              } else {
+                document.getElementById("prediction").innerHTML = "Request failed. " + req.status;
+              }
+            } else {
+                document.getElementById("prediction").innerHTML = "Asking...";
+            }
+          };
+          req.open("POST", "/", true);
+          req.setRequestHeader("content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+          req.send(encodeURIComponent(filename + "," + reader.result));
         }
-        reader.readAsDataURL(this.files[0]);
-      });
+        reader.readAsDataURL(file.files[0]);
+      };
     </script>
   </body>
 </html>
