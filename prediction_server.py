@@ -51,7 +51,7 @@ class BaseHttpServer(BaseHTTPRequestHandler):
           };
           req.open("POST", "/", true);
           req.setRequestHeader("content-type", "application/x-www-form-urlencoded;charset=UTF-8");
-          req.send(encodeURIComponent(filename + "," + reader.result));
+          req.send(filename + "," + reader.result);
         }
         reader.readAsDataURL(file.files[0]);
       };
@@ -68,10 +68,9 @@ class BaseHttpServer(BaseHTTPRequestHandler):
     def do_POST(self):
         content_len = int(self.headers.get('content-length', 0))
         content = self.rfile.read(content_len).decode('UTF-8')
-        contents = content.split(',', 1)
+        contents = content.split(',', 2)
         filename = contents[0]
-        content = contents[1].replace('data:image/jpeg;base64,', '')
-        image = np.array(Image.open(io.BytesIO(base64.b64decode(content)))
+        image = np.array(Image.open(io.BytesIO(base64.b64decode(contents[2])))
                          .resize((target_width, target_height))).transpose(1, 0, 2)
         image = np.expand_dims(image, axis=0)
         result = model.predict(image)
